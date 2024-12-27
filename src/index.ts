@@ -61,4 +61,4 @@ process.on('SIGINT', async () => {
     process.exit(0)
 })
 
-// app.use('/',router())
+app.use('/',router())
