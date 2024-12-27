@@ -5,6 +5,7 @@ import cors from 'cors'
 import express from 'express'
 import http from 'http'
 import mongoose from 'mongoose'
+import router from './router/index.js'
 const app = express();
 
 app.use(cors({
@@ -59,3 +60,5 @@ process.on('SIGINT', async () => {
     console.log('MongoDB connection closed due to app termination')
     process.exit(0)
 })
+
+// app.use('/',router())
