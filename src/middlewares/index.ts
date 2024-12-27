@@ -1,24 +1,28 @@
 import { get, merge } from 'lodash';
 
 import express from 'express';
-import { getUserBySessionToken } from '../db/users.js';
+import { getUsersBySessionToken } from '../db/users.js';
 
-export const isAuthenticated = async (req: express.Request, res: express.Response, next: express.NextFunction)  => {
+export const isAuthenticated: express.RequestHandler = async (req, res, next) => {
     try {
         const sessionToken = req.cookies['MARWAN-AUTH'];
+        
         if (!sessionToken) {
-            return res.sendStatus(403);
+            res.sendStatus(403);
+            return;
         }
 
-        const existingUser = await getUserBySessionToken(sessionToken);
+        const existingUser = await getUsersBySessionToken(sessionToken);
+        
         if (!existingUser) {
-            return res.sendStatus(403);
+            res.sendStatus(403);
+            return;
         }
 
         merge(req, { identity: existingUser });
         next();
     } catch (error) {
         console.log(error);
-        return res.sendStatus(400);
+        res.sendStatus(400);
     }
 }

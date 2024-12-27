@@ -1,5 +1,6 @@
+import { deleteUserById, getUsers, getUsersByEmail, getUsersById, updateUserById } from '../db/users.js';
+
 import express from 'express';
-import { deleteUserById, getUserById, getUsers, updateUserById, getUsersByEmail } from '../db/users.js';
 
 // Get all users
 export const getAllUsers = async (req: express.Request, res: express.Response): Promise<void> => {
@@ -16,7 +17,7 @@ export const getAllUsers = async (req: express.Request, res: express.Response): 
 export const getUserByIdController = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const user = await getUserById(id);
+        const user = await getUsersById(id);
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
